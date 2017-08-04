@@ -1,0 +1,23 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+	{# <pre>{{ dump(abonnes) }}</pre> #}
+
+	<table style="height: 25px; border: solid black 2px;">
+		<tr style="height: 25px; border: solid black 2px;">
+			<th>ID</th>
+			<th>Prénom</th>
+		</tr>
+		{% for row in abonnes %}
+    		<tr>
+            	<td>{{ row.id_abonne }}</td>
+            	<td>{{ row.prenom }}</td>
+            	<td><a href="{{ path('abonne_detail', { id: row.id_abonne }) }}">Détails</a></td>
+            	<td><a href="{{ path('abonne_modif', { id: row.id_abonne }) }}">Modifier</a></td>
+            	<td><a href="{{ path('abonne_suppression', { id: row.id_abonne }) }}">Supprimer</a></td>
+    		</tr>
+		{% endfor %}
+	</table>
+	<p><a href="{{ path('abonne_ajout') }}">Ajouter un abonné</a></p>
+
+{% endblock %}

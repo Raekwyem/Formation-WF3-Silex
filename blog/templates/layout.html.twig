@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title '' %} - Blog</title>
+        {% block stylesheets %}
+            <!-- Latest compiled and minified CSS -->
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">        
+            <link href="{{ asset('css/main.css') }}" rel="stylesheet" type="text/css" />
+        {% endblock %}
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse">
+            <div class="container">
+                <a class="navbar-brand">Menu admin</a>
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="{{ path('admin_categories') }}">Gestions rubriques</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('admin_articles') }}">Gestions articles</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <a class="navbar-brand" href="{{ path('homepage') }}">Blog</a>
+                {# inclus le rendu de la route ici #}
+                {{ render(url('category_list')) }}
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="{{ path('user_register') }}">Créer un compte</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            {# affichage des messages flash #}
+            {% for type, flashes in app.session.flashbag.all %}
+                {% for flash in flashes %}
+                    {% if type == 'error' %}
+                        {# class alert-danger du bootstrap #}
+                        {% set type = 'danger' %}
+                    {% endif %}
+                    <div class="alert alert-{{ type }}">{{ flash|raw }}</div>
+                {% endfor %}
+            {% endfor %}
+            {% block content %}{% endblock %}
+        </div>
+        {% block javascripts %}
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+            <!-- Latest compiled and minified JavaScript -->
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        {% endblock %}
+    </body>
+</html>
